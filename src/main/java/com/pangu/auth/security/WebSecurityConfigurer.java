@@ -6,6 +6,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
@@ -24,10 +27,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-            .inMemoryAuthentication()
-            .withUser("cgrant").password("{noop}demo101").roles("USER")
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        auth.inMemoryAuthentication()
+            .withUser("cgrant").password(encoder.encode("demo101")).roles("USER")
             .and()
-            .withUser("admin").password("{noop}demo101").roles("USER", "ADMIN");
+            .withUser("admin").password(encoder.encode("demo101")).roles("USER", "ADMIN")
+            .and()
+            .passwordEncoder(new BCryptPasswordEncoder());
     }
 }
