@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.User.UserBuilder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
@@ -27,12 +27,21 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        UserBuilder users = User.withDefaultPasswordEncoder();
+        UserDetails user1 = users
+          .username("cgrant")
+          .password("demo101")
+          .roles("USER")
+          .build();
+        System.out.println("cgrant" + user1.getPassword());
+        UserDetails user2 = users
+                .username("admin")
+                .password("demo101")
+                .roles("USER", "ADMIN")
+                .build();
+        System.out.println("admin" + user2.getPassword());
         auth.inMemoryAuthentication()
-            .withUser("cgrant").password(encoder.encode("demo101")).roles("USER")
-            .and()
-            .withUser("admin").password(encoder.encode("demo101")).roles("USER", "ADMIN")
-            .and()
-            .passwordEncoder(new BCryptPasswordEncoder());
+            .withUser(user1)
+            .withUser(user2);
     }
 }
