@@ -22,10 +22,10 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         String encode = bCryptPasswordEncoder.encode("userservice_secret");
-        System.out.println("userservice_secret:" + encode);
         clients.inMemory()
                 .withClient("UserService")
                 .secret("{bcrypt}" + encode)
+                //.secret("userservice_secret")
                 .authorizedGrantTypes("refresh_token", "password", "client_credentials")
                 .scopes("webclient", "mobileclient");
     }

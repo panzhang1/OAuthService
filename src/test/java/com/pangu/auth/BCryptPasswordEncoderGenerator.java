@@ -19,7 +19,16 @@ public class BCryptPasswordEncoderGenerator {
     
     private void gen1() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        String encode = bCryptPasswordEncoder.encode("userservice_secret");
-        System.out.println("userservice_secret:" + encode);
+        String encode1 = bCryptPasswordEncoder.encode("userservice_secret");
+        System.out.println("userservice_secret:" + encode1);
+        
+        String encode2 = bCryptPasswordEncoder.encode("userservice_secret");
+        System.out.println("userservice_secret:" + encode2);
+        
+        boolean isMatch = bCryptPasswordEncoder.matches("$2a$10$hUoc8fN.IHBgyfCCn2/J/erh2g7LImkO/vd6EwxtNIS6.sxYOSakC", encode1);
+        System.out.println(isMatch);
+        
+        isMatch = bCryptPasswordEncoder.matches("userservice_secret", encode1);
+        System.out.println(isMatch);
     }
 }
