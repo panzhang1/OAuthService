@@ -33,13 +33,12 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
           .password("demo101")
           .roles("USER")
           .build();
-        System.out.println("cgrant" + user1.getPassword());
+
         UserDetails user2 = users
                 .username("admin")
                 .password("demo101")
                 .roles("USER", "ADMIN")
                 .build();
-        System.out.println("admin" + user2.getPassword());
         auth.inMemoryAuthentication()
             .withUser(user1)
             .withUser(user2);

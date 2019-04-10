@@ -25,7 +25,6 @@ public class OAuth2Config extends AuthorizationServerConfigurerAdapter {
         clients.inMemory()
                 .withClient("UserService")
                 .secret("{bcrypt}" + encode)
-                //.secret("userservice_secret")
                 .authorizedGrantTypes("refresh_token", "password", "client_credentials")
                 .scopes("webclient", "mobileclient");
     }
