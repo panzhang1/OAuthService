@@ -1,6 +1,8 @@
 # OAuth Service
-This is pan zhang's practice project for micoservice
-Build a OAuth Service server, this can be a common service used by multiple service
+This is practice project for Microservice
+Build an OAuth Service server, this can be a common service used by multiple service
+
+This service will generate JWT token
 
 ## OAuth Service
 http://localhost:8901/auth/oauth/token
